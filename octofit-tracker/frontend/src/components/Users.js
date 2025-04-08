@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Row, Col } from 'react-bootstrap';
+import { Table, Container, Row, Col, Card, Spinner, Alert, Badge } from 'react-bootstrap';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -26,42 +26,69 @@ function Users() {
     fetchUsers();
   }, []);
 
-  if (loading) return <div className="text-center mt-5"><h2>Loading users...</h2></div>;
-  if (error) return <div className="text-center mt-5 text-danger"><h2>{error}</h2></div>;
+  if (loading) return (
+    <Container className="text-center mt-5">
+      <Spinner animation="border" role="status" className="loading-spinner">
+        <span className="visually-hidden">Loading users...</span>
+      </Spinner>
+      <h2 className="mt-3">Loading users...</h2>
+    </Container>
+  );
+
+  if (error) return (
+    <Container className="mt-5">
+      <Alert variant="danger">
+        <Alert.Heading>Error Loading Data</Alert.Heading>
+        <p>{error}</p>
+      </Alert>
+    </Container>
+  );
 
   return (
-    <Container className="mt-4">
+    <Container className="page-container">
       <Row>
         <Col>
-          <h1 className="text-center mb-4">Users</h1>
-          {users.length === 0 ? (
-            <p className="text-center">No users found.</p>
-          ) : (
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Team</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.team ? user.team.name : 'No Team'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
+          <h1 className="section-title display-4 text-center mb-4">Users</h1>
+          <Card>
+            <Card.Body>
+              {users.length === 0 ? (
+                <Alert variant="info">No users found.</Alert>
+              ) : (
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Team</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((user) => (
+                      <tr key={user.id}>
+                        <td>{user.id}</td>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>
+                          {user.team ? (
+                            <Badge bg="info" text="dark">{user.team.name}</Badge>
+                          ) : (
+                            <Badge bg="secondary">No Team</Badge>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
   );
 }
+
+export default Users;
 
 export default Users;

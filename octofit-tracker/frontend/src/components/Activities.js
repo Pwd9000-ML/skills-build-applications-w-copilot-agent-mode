@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Row, Col } from 'react-bootstrap';
+import { Table, Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -26,42 +26,63 @@ function Activities() {
     fetchActivities();
   }, []);
 
-  if (loading) return <div className="text-center mt-5"><h2>Loading activities...</h2></div>;
-  if (error) return <div className="text-center mt-5 text-danger"><h2>{error}</h2></div>;
+  if (loading) return (
+    <Container className="text-center mt-5">
+      <Spinner animation="border" role="status" className="loading-spinner">
+        <span className="visually-hidden">Loading activities...</span>
+      </Spinner>
+      <h2 className="mt-3">Loading activities...</h2>
+    </Container>
+  );
+
+  if (error) return (
+    <Container className="mt-5">
+      <Alert variant="danger">
+        <Alert.Heading>Error Loading Data</Alert.Heading>
+        <p>{error}</p>
+      </Alert>
+    </Container>
+  );
 
   return (
-    <Container className="mt-4">
+    <Container className="page-container">
       <Row>
         <Col>
-          <h1 className="text-center mb-4">Activities</h1>
-          {activities.length === 0 ? (
-            <p className="text-center">No activities found.</p>
-          ) : (
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Points</th>
-                </tr>
-              </thead>
-              <tbody>
-                {activities.map((activity) => (
-                  <tr key={activity.id}>
-                    <td>{activity.id}</td>
-                    <td>{activity.name}</td>
-                    <td>{activity.description}</td>
-                    <td>{activity.points}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
+          <h1 className="section-title display-4 text-center mb-4">Activities</h1>
+          <Card>
+            <Card.Body>
+              {activities.length === 0 ? (
+                <Alert variant="info">No activities found.</Alert>
+              ) : (
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Points</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activities.map((activity) => (
+                      <tr key={activity.id}>
+                        <td>{activity.id}</td>
+                        <td>{activity.name}</td>
+                        <td>{activity.description}</td>
+                        <td>{activity.points}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
   );
 }
+
+export default Activities;
 
 export default Activities;

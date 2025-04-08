@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Row, Col } from 'react-bootstrap';
+import { Table, Container, Row, Col, Card, Spinner, Alert, Badge } from 'react-bootstrap';
 
 function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -26,42 +26,73 @@ function Leaderboard() {
     fetchLeaderboard();
   }, []);
 
-  if (loading) return <div className="text-center mt-5"><h2>Loading leaderboard...</h2></div>;
-  if (error) return <div className="text-center mt-5 text-danger"><h2>{error}</h2></div>;
+  if (loading) return (
+    <Container className="text-center mt-5">
+      <Spinner animation="border" role="status" className="loading-spinner">
+        <span className="visually-hidden">Loading leaderboard...</span>
+      </Spinner>
+      <h2 className="mt-3">Loading leaderboard...</h2>
+    </Container>
+  );
+
+  if (error) return (
+    <Container className="mt-5">
+      <Alert variant="danger">
+        <Alert.Heading>Error Loading Data</Alert.Heading>
+        <p>{error}</p>
+      </Alert>
+    </Container>
+  );
 
   return (
-    <Container className="mt-4">
+    <Container className="page-container">
       <Row>
         <Col>
-          <h1 className="text-center mb-4">Leaderboard</h1>
-          {leaderboard.length === 0 ? (
-            <p className="text-center">No leaderboard entries found.</p>
-          ) : (
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>User</th>
-                  <th>Team</th>
-                  <th>Points</th>
-                </tr>
-              </thead>
-              <tbody>
-                {leaderboard.map((entry, index) => (
-                  <tr key={entry.id}>
-                    <td>{index + 1}</td>
-                    <td>{entry.user.name}</td>
-                    <td>{entry.team.name}</td>
-                    <td>{entry.points}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
+          <h1 className="section-title display-4 text-center mb-4">Leaderboard</h1>
+          <Card>
+            <Card.Body>
+              {leaderboard.length === 0 ? (
+                <Alert variant="info">No leaderboard entries found.</Alert>
+              ) : (
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>User</th>
+                      <th>Team</th>
+                      <th>Points</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {leaderboard.map((entry, index) => (
+                      <tr key={entry.id}>
+                        <td>
+                          {index === 0 ? (
+                            <Badge bg="warning" text="dark">🥇 {index + 1}</Badge>
+                          ) : index === 1 ? (
+                            <Badge bg="secondary">🥈 {index + 1}</Badge>
+                          ) : index === 2 ? (
+                            <Badge bg="danger">🥉 {index + 1}</Badge>
+                          ) : (
+                            index + 1
+                          )}
+                        </td>
+                        <td>{entry.user.name}</td>
+                        <td>{entry.team.name}</td>
+                        <td><Badge bg="primary" pill>{entry.points}</Badge></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
   );
 }
+
+export default Leaderboard;
 
 export default Leaderboard;

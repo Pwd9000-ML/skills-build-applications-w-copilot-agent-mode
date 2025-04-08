@@ -33,10 +33,19 @@ function App() {
 
         <Routes>
           <Route path="/" element={
-            <div className="text-center mt-5">
-              <h1>Welcome to OctoFit Tracker</h1>
-              <p>Mergington High School's fitness tracking application</p>
-              <p>Use the navigation bar to explore the app</p>
+            <div className="welcome-container">
+              <h1 className="welcome-title display-4">Welcome to OctoFit Tracker</h1>
+              <p className="welcome-subtitle lead">Mergington High School's fitness tracking application</p>
+              <div className="card mt-5 mx-auto" style={{ maxWidth: '600px' }}>
+                <div className="card-header">Get Started</div>
+                <div className="card-body">
+                  <p className="card-text">Use the navigation bar to explore the app</p>
+                  <div className="d-flex justify-content-center gap-3 mt-4">
+                    <Link to="/activities" className="btn btn-primary">View Activities</Link>
+                    <Link to="/leaderboard" className="btn btn-outline-primary">Check Leaderboard</Link>
+                  </div>
+                </div>
+              </div>
             </div>
           } />
           <Route path="/users" element={<Users />} />
