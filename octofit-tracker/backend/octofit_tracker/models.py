@@ -4,8 +4,13 @@ class FitnessUser(models.Model):
     _id = models.ObjectIdField()
     username = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)
-    
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
+    objects = FitnessUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
     def __str__(self):
         return self.username
 
