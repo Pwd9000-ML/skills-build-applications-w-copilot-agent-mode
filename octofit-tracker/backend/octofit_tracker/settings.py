@@ -129,6 +129,17 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Codespace API endpoint configuration
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'URL_FIELD_NAME': 'href',
+}
+
+# Codespace URL suffix for API endpoints
+CODESPACE_URL_SUFFIX = 'ideal-space-eureka-64v95r4wg9wcrx4j-8000.app.github.dev'
+
 # Enable CORS
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = [
