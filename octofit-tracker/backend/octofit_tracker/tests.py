@@ -2,13 +2,13 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
-from .models import User, Team, Activity, Leaderboard, Workout
+from .models import FitnessUser, Team, Activity, Leaderboard, Workout
 from datetime import timedelta
 from bson import ObjectId
 
 class UserModelTests(TestCase):
     def setUp(self):
-        User.objects.create(
+        FitnessUser.objects.create(
             _id=ObjectId(),
             username="testuser",
             email="test@example.com",
@@ -16,13 +16,13 @@ class UserModelTests(TestCase):
         )
 
     def test_user_creation(self):
-        user = User.objects.get(username="testuser")
+        user = FitnessUser.objects.get(username="testuser")
         self.assertEqual(user.email, "test@example.com")
         self.assertEqual(str(user), "testuser")
 
 class TeamModelTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create(
+        self.user = FitnessUser.objects.create(
             _id=ObjectId(),
             username="teammember",
             email="teammember@example.com",
@@ -42,7 +42,7 @@ class TeamModelTests(TestCase):
 
 class ActivityModelTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create(
+        self.user = FitnessUser.objects.create(
             _id=ObjectId(),
             username="activityuser",
             email="activity@example.com",
@@ -63,7 +63,7 @@ class ActivityModelTests(TestCase):
 
 class LeaderboardModelTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create(
+        self.user = FitnessUser.objects.create(
             _id=ObjectId(),
             username="leaderuser",
             email="leader@example.com",
@@ -99,7 +99,7 @@ class WorkoutModelTests(TestCase):
 class APITests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create(
+        self.user = FitnessUser.objects.create(
             _id=ObjectId(),
             username="apiuser",
             email="api@example.com",
