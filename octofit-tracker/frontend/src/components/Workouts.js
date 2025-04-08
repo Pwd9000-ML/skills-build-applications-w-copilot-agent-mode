@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Row, Col } from 'react-bootstrap';
+import { Table, Container, Row, Col, Card, Spinner, Alert, Badge } from 'react-bootstrap';
 
 function Workouts() {
   const [workouts, setWorkouts] = useState([]);
@@ -26,46 +26,75 @@ function Workouts() {
     fetchWorkouts();
   }, []);
 
-  if (loading) return <div className="text-center mt-5"><h2>Loading workouts...</h2></div>;
-  if (error) return <div className="text-center mt-5 text-danger"><h2>{error}</h2></div>;
+  if (loading) return (
+    <Container className="text-center mt-5">
+      <Spinner animation="border" role="status" className="loading-spinner">
+        <span className="visually-hidden">Loading workouts...</span>
+      </Spinner>
+      <h2 className="mt-3">Loading workouts...</h2>
+    </Container>
+  );
+
+  if (error) return (
+    <Container className="mt-5">
+      <Alert variant="danger">
+        <Alert.Heading>Error Loading Data</Alert.Heading>
+        <p>{error}</p>
+      </Alert>
+    </Container>
+  );
 
   return (
-    <Container className="mt-4">
+    <Container className="page-container">
       <Row>
         <Col>
-          <h1 className="text-center mb-4">Workouts</h1>
-          {workouts.length === 0 ? (
-            <p className="text-center">No workouts found.</p>
-          ) : (
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Activity</th>
-                  <th>Date</th>
-                  <th>Duration (min)</th>
-                  <th>Points Earned</th>
-                </tr>
-              </thead>
-              <tbody>
-                {workouts.map((workout) => (
-                  <tr key={workout.id}>
-                    <td>{workout.id}</td>
-                    <td>{workout.user ? workout.user.name : 'Unknown'}</td>
-                    <td>{workout.activity ? workout.activity.name : 'Unknown'}</td>
-                    <td>{new Date(workout.date).toLocaleDateString()}</td>
-                    <td>{workout.duration}</td>
-                    <td>{workout.points_earned}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
+          <h1 className="section-title display-4 text-center mb-4">Workouts</h1>
+          <Card>
+            <Card.Body>
+              {workouts.length === 0 ? (
+                <Alert variant="info">No workouts found.</Alert>
+              ) : (
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Activity</th>
+                      <th>Date</th>
+                      <th>Duration (min)</th>
+                      <th>Points Earned</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {workouts.map((workout) => (
+                      <tr key={workout.id}>
+                        <td>{workout.id}</td>
+                        <td>{workout.user ? workout.user.name : 'Unknown'}</td>
+                        <td>
+                          {workout.activity ? (
+                            <Badge bg="info" text="dark">{workout.activity.name}</Badge>
+                          ) : (
+                            'Unknown'
+                          )}
+                        </td>
+                        <td>{new Date(workout.date).toLocaleDateString()}</td>
+                        <td>{workout.duration}</td>
+                        <td>
+                          <Badge bg="success" pill>{workout.points_earned}</Badge>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>
   );
 }
+
+export default Workouts;
 
 export default Workouts;

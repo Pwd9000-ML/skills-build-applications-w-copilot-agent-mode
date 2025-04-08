@@ -1,0 +1,161 @@
+/* General styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f8ff; /* Light blue background */
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  text-align: center;
+}
+
+/* Custom navbar styling to enhance Bootstrap */
+.navbar-dark.bg-dark {
+  background-color: #4682b4 !important; /* Steel blue - override Bootstrap dark */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-link {
+  font-size: 1.1rem;
+  margin: 0 0.5rem;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #f0f8ff !important; /* Light blue */
+}
+
+/* Page and section styling */
+.page-container {
+  padding: 2rem 1rem;
+}
+
+.section-title {
+  color: #00008b; /* Dark blue header */
+  margin-bottom: 1.5rem;
+}
+
+/* Table customization to enhance Bootstrap tables */
+.table {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #4682b4; /* Steel blue */
+  color: white;
+  border-bottom: none;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(70, 130, 180, 0.05); /* Very light steel blue */
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(70, 130, 180, 0.1); /* Light steel blue */
+}
+
+/* Card customization */
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: transform 0.3s;
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-header {
+  background-color: #4682b4; /* Steel blue */
+  color: white;
+  font-weight: bold;
+}
+
+/* Button styling to enhance Bootstrap buttons */
+.btn-primary {
+  background-color: #4682b4; /* Steel blue */
+  border-color: #4682b4;
+}
+
+.btn-primary:hover {
+  background-color: #5a9bd4; /* Lighter steel blue */
+  border-color: #5a9bd4;
+}
+
+.btn-outline-primary {
+  color: #4682b4;
+  border-color: #4682b4;
+}
+
+.btn-outline-primary:hover {
+  background-color: #4682b4;
+  color: white;
+}
+
+/* Form control styling */
+.form-control:focus {
+  border-color: #4682b4;
+  box-shadow: 0 0 0 0.25rem rgba(70, 130, 180, 0.25);
+}
+
+/* Loading and error states */
+.loading-spinner {
+  color: #4682b4;
+}
+
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+/* Welcome page styling */
+.welcome-container {
+  padding: 3rem 1rem;
+}
+
+.welcome-title {
+  color: #00008b;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.welcome-subtitle {
+  color: #4682b4;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+/* App header for any full-screen pages */
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .welcome-title {
+    font-size: 2rem;
+  }
+}
