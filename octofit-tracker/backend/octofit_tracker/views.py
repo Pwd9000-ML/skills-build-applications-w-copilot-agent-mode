@@ -7,12 +7,20 @@ from .models import FitnessUser, Team, Activity, Leaderboard, Workout
 
 @api_view(['GET'])
 def api_root(request, format=None):
+    base_url = 'https://ideal-space-eureka-64v95r4wg9wcrx4j-8000.app.github.dev/'
+    
+    # If request is coming from localhost, use that instead
+    host = request.get_host()
+    if 'localhost' in host or '127.0.0.1' in host:
+        scheme = request.scheme
+        base_url = f'{scheme}://{host}/'
+    
     return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'teams': reverse('team-list', request=request, format=format),
-        'activities': reverse('activity-list', request=request, format=format),
-        'leaderboard': reverse('leaderboard-list', request=request, format=format),
-        'workouts': reverse('workout-list', request=request, format=format)
+        'users': base_url + 'api/users/',
+        'teams': base_url + 'api/teams/',
+        'activities': base_url + 'api/activities/',
+        'leaderboard': base_url + 'api/leaderboard/',
+        'workouts': base_url + 'api/workouts/'
     })
 
 class UserViewSet(viewsets.ModelViewSet):
